@@ -3,68 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ page_title }}</title>
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --ink: #1f1a17;
+            --muted: #5a4f48;
+            --paper: #fff7ed;
+            --accent: #c04b2b;
+            --accent-2: #1f6f5f;
+            --shadow: 0 18px 40px rgba(31, 26, 23, 0.18);
+            --ring: 0 0 0 3px rgba(192, 75, 43, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            font-family: "Space Grotesk", "Segoe UI", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(1200px 600px at 90% -10%, rgba(31, 111, 95, 0.18), transparent 60%),
+                radial-gradient(900px 500px at -10% 20%, rgba(192, 75, 43, 0.22), transparent 65%),
+                repeating-linear-gradient(135deg, rgba(31, 26, 23, 0.05), rgba(31, 26, 23, 0.05) 1px, transparent 1px, transparent 14px),
+                var(--paper);
             margin: 0;
-            padding: 40px;
+            min-height: 100vh;
+            padding: 48px 18px 72px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         main {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: min(900px, 100%);
         }
 
         article {
             background: #ffffff;
-            max-width: 700px;
-            width: 100%;
             padding: 32px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.6s ease-in-out;
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(31, 26, 23, 0.08);
+            animation: riseIn 0.6s ease-in-out;
         }
 
         h1 {
             margin-top: 0;
-            color: #222;
-            font-size: 1.8rem;
-            margin-bottom: 12px;
+            color: var(--ink);
+            font-family: "Fraunces", "Times New Roman", serif;
+            font-size: clamp(2rem, 2.3vw + 1.2rem, 3rem);
+            margin-bottom: 10px;
         }
 
         .meta {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
+            color: var(--muted);
+            font-size: 0.95rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
         }
 
         .review-body {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            color: #333;
-            margin-bottom: 20px;
+            font-size: 1.08rem;
+            line-height: 1.7;
+            color: var(--ink);
+            margin-bottom: 22px;
         }
 
         .rating {
-            display: inline-block;
-            background: #4f46e5;
-            color: white;
-            padding: 8px 14px;
-            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(192, 75, 43, 0.12);
+            color: var(--accent);
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
-        @keyframes fadeIn {
+        .pill {
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(31, 111, 95, 0.12);
+            color: var(--accent-2);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        @keyframes riseIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(12px);
             }
             to {
                 opacity: 1;
@@ -74,9 +108,15 @@
 
         footer {
             text-align: center;
-            margin-top: 30px;
-            font-size: 0.8rem;
-            color: #777;
+            margin-top: 32px;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 32px 16px 56px;
+            }
         }
     </style>
 </head>
@@ -85,26 +125,24 @@
 
 <main>
     <article>
-
+        <span class="pill">Destination review</span>
         <h1>{{ review.destination.name }}</h1>
-
         <div class="meta">
-            Reviewed by <strong>{{ review.author }}</strong> · {{ review.created_at }}
+            <span>Reviewed by <strong>{{ review.author }}</strong></span>
+            <span>-</span>
+            <span>{{ review.created_at }}</span>
         </div>
-
         <div class="review-body">
             {{ review.body }}
         </div>
-
         <div class="rating">
-            ⭐ Rating: {{ review.rating }}/5
+            Rating: {{ review.rating }}/5
         </div>
-
     </article>
 </main>
 
 <footer>
-    © {{ review.destination.name }} Reviews
+    {{ review.destination.name }} Reviews
 </footer>
 
 </body>
